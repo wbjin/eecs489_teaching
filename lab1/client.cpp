@@ -26,7 +26,7 @@ int main() {
         exit(1);
     }
     memcpy(&addr.sin_addr, host->h_addr, host->h_length);
-    addr.sin_port = 8080; 
+    addr.sin_port = htons(8080);  // server port
 
     // Connect to the server
     if (connect(sockfd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {

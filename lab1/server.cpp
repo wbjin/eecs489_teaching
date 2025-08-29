@@ -27,7 +27,7 @@ int main() {
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = INADDR_ANY;
-    addr.sin_port = PORT;
+    addr.sin_port = htons(PORT);
     if (bind(sockfd, (sockaddr*)&addr, (socklen_t) sizeof(addr)) == -1) {
         perror("error binding socket");
         exit(1);

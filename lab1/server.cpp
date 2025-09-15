@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#define PORT 8080
+#define PORT 7123
 
 int main() {
     // Make a socket
@@ -34,6 +34,7 @@ int main() {
     }
 
     // Listen for incoming connections
+    printf("Listening on port %d\n", PORT);
     if (listen(sockfd, 10) == -1) {
         perror("error listening");
         exit(1);

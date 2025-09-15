@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#define PORT 7123
+#define PORT 8080
 
 int main() {
     // Make a socket
@@ -26,10 +26,9 @@ int main() {
         exit(1);
     }
     memcpy(&addr.sin_addr, host->h_addr, host->h_length);
-    addr.sin_port = htons(PORT);  // server port
+    addr.sin_port = htons(8080);  // server port
 
     // Connect to the server
-    printf("Connecting to port %d\n", PORT);
     if (connect(sockfd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
         perror("error connecting");
         exit(1);
@@ -40,6 +39,15 @@ int main() {
     if (send(sockfd, message, sizeof(message), 0) == -1) {
         perror("send");
         exit(1);
+    }
+
+    char buf[1024];
+    int rcvd;
+    if ((rcvd = recv(sockfd, buf, sizeof(buf), 0)) == -1) {
+        perror("recv");
+    } else {
+        buf[rcvd] = '\0';
+        printf("message from server %s\n", buf);
     }
 
     shutdown(sockfd, SHUT_RDWR);
